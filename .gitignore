@@ -18,3 +18,6 @@ __pycache__/
 .idea/
 .DS_Store
 *.log
+
+# Design specs and plans stay local (not project source)
+docs/
