@@ -338,6 +338,53 @@ input:focus-visible {
   background: var(--color-assistant);
 }
 
+.waitlist-form label {
+  display: block;
+  margin-bottom: 0.4rem;
+  font-weight: 600;
+}
+
+.form-row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+@media (min-width: 520px) {
+  .form-row {
+    flex-direction: row;
+  }
+}
+
+.form-row input {
+  flex: 1;
+  min-width: 0;
+  padding: 0.75rem 1rem;
+  font: inherit;
+  background: #fff;
+  border: 2px solid var(--color-border);
+  border-radius: 999px;
+}
+
+.form-row input[aria-invalid='true'] {
+  border-color: var(--color-error);
+}
+
+.form-error {
+  margin: 0.5rem 0 0;
+  font-weight: 500;
+  color: var(--color-error);
+}
+
+.form-success {
+  padding: 1rem 1.25rem;
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--color-accent);
+  background: #fff;
+  border-radius: var(--radius);
+}
+
 /* Footer */
 .site-footer {
   padding: 2rem 0;
