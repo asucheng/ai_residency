@@ -9,7 +9,7 @@ Supabase and emailed to the business owner, who follows up with a custom quote.
 
 Built for Stage 1 of the AI Engineer Residency. The working assistant comes in later stages.
 
-**Live site:** _added after the first deployment_
+**Live site:** https://storesidekick.vercel.app
 
 ## How it works
 
