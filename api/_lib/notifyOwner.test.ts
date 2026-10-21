@@ -65,6 +65,16 @@ describe('createResendNotifier', () => {
     expect(JSON.parse(String(init?.body))).toEqual(buildOwnerEmail(request, saved, env));
   });
 
+  it('gives up when Resend does not respond in time', async () => {
+    const fetchFn = vi.fn<typeof fetch>(
+      (_url, init) =>
+        new Promise((_resolve, reject) => {
+          init?.signal?.addEventListener('abort', () => reject(init.signal!.reason));
+        }),
+    );
+    await expect(createResendNotifier(env, fetchFn, 20)(request, saved)).rejects.toThrow();
+  });
+
   it('throws when Resend rejects the email', async () => {
     const fetchFn = vi.fn<typeof fetch>(() =>
       Promise.resolve(new Response('{"message":"invalid key"}', { status: 401 })),

@@ -50,6 +50,9 @@ export type ValidationResult = { ok: true; value: QuoteRequest } | { ok: false; 
 
 const MAX_TEXT_LENGTH = 100;
 const MAX_URL_LENGTH = 2048;
+// Line breaks and other control characters could forge lines in the owner email.
+// oxlint-disable-next-line no-control-regex -- intentionally matches control characters
+const CONTROL_CHARS = /[\u0000-\u001f\u007f]/;
 
 export const ERRORS = {
   email: 'Enter a valid email address.',
@@ -61,11 +64,13 @@ export const ERRORS = {
   channelsNoneMixed: 'Choose "None yet" or your channels, not both.',
   otherMissing: 'Tell us which other channel you use.',
   otherTooLong: `Keep this under ${MAX_TEXT_LENGTH} characters.`,
+  textInvalid: 'Use a single line of plain text.',
 } as const;
 
 export function normalizeStoreUrl(raw: string): string | null {
   const trimmed = raw.trim();
-  if (!trimmed) return null;
+  // The URL parser silently drops tabs and newlines, so reject whitespace before parsing.
+  if (!trimmed || /\s/.test(trimmed) || CONTROL_CHARS.test(trimmed)) return null;
   const withScheme = /^[a-z][a-z\d+.-]*:\/\//i.test(trimmed) ? trimmed : `https://${trimmed}`;
   if (withScheme.length > MAX_URL_LENGTH) return null;
   let url: URL;
@@ -75,7 +80,8 @@ export function normalizeStoreUrl(raw: string): string | null {
     return null;
   }
   if (url.protocol !== 'http:' && url.protocol !== 'https:') return null;
-  if (!url.hostname.includes('.')) return null;
+  const host = url.hostname;
+  if (!host.includes('.') || host.startsWith('.') || host.endsWith('.')) return null;
   return withScheme;
 }
 
@@ -99,6 +105,7 @@ export function validateQuoteRequest(input: unknown): ValidationResult {
   const productType = text(data.productType).trim();
   if (!productType) errors.productType = ERRORS.productTypeMissing;
   else if (productType.length > MAX_TEXT_LENGTH) errors.productType = ERRORS.productTypeTooLong;
+  else if (CONTROL_CHARS.test(productType)) errors.productType = ERRORS.textInvalid;
 
   const rawChannels = Array.isArray(data.supportChannels) ? data.supportChannels : [];
   const known = rawChannels.filter(
@@ -114,6 +121,7 @@ export function validateQuoteRequest(input: unknown): ValidationResult {
   const otherText = text(data.otherChannel).trim();
   if (wantsOther && !otherText) errors.otherChannel = ERRORS.otherMissing;
   else if (wantsOther && otherText.length > MAX_TEXT_LENGTH) errors.otherChannel = ERRORS.otherTooLong;
+  else if (wantsOther && CONTROL_CHARS.test(otherText)) errors.otherChannel = ERRORS.textInvalid;
 
   if (Object.keys(errors).length > 0 || !storeUrl) return { ok: false, errors };
 

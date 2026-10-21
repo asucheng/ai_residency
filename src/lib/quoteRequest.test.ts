@@ -32,6 +32,17 @@ describe('normalizeStoreUrl', () => {
     },
   );
 
+  it.each([
+    'mystore.com/\nSubmitted: fake',
+    'my\tstore.com',
+    'mystore.com/a b',
+    'mystore.com/\u0000',
+    '.com',
+    'mystore.com.',
+  ])('rejects control characters, spaces and dotted-edge hosts: %j', (raw) => {
+    expect(normalizeStoreUrl(raw)).toBeNull();
+  });
+
   it('rejects URLs longer than 2048 characters', () => {
     expect(normalizeStoreUrl(`mystore.com/${'a'.repeat(2048)}`)).toBeNull();
   });
@@ -86,6 +97,20 @@ describe('validateQuoteRequest', () => {
   it('rejects a product type over 100 characters', () => {
     const result = validateQuoteRequest({ ...valid, productType: 'x'.repeat(101) });
     expect(result).toEqual({ ok: false, errors: { productType: ERRORS.productTypeTooLong } });
+  });
+
+  it.each([
+    ['productType', { productType: 'Candles\nSubmitted: fake' }],
+    ['productType', { productType: 'a\u0000b' }],
+    ['otherChannel', { supportChannels: ['other'], otherChannel: 'Whats\nApp' }],
+  ])('rejects line breaks and control characters in %s', (field, overrides) => {
+    const result = validateQuoteRequest({ ...valid, ...overrides });
+    expect(result).toEqual({ ok: false, errors: { [field]: ERRORS.textInvalid } });
+  });
+
+  it('rejects an email containing control characters', () => {
+    const result = validateQuoteRequest({ ...valid, email: 'a\u0000@shop.com' });
+    expect(result).toEqual({ ok: false, errors: { email: ERRORS.email } });
   });
 
   it('rejects unknown channel ids', () => {

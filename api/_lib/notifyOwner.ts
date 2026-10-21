@@ -38,6 +38,7 @@ export function buildOwnerEmail(
 export function createResendNotifier(
   env: Pick<ServerEnv, 'resendApiKey' | 'ownerEmail' | 'emailFrom'>,
   fetchFn: typeof fetch = fetch,
+  timeoutMs = 5000,
 ): QuoteRequestDeps['notify'] {
   return async (request, saved) => {
     const response = await fetchFn('https://api.resend.com/emails', {
@@ -47,6 +48,8 @@ export function createResendNotifier(
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(buildOwnerEmail(request, saved, env)),
+      // A stalled email must not hold up a request that is already saved.
+      signal: AbortSignal.timeout(timeoutMs),
     });
     if (!response.ok) {
       throw new Error(`Resend responded ${response.status}: ${await response.text()}`);
