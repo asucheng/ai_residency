@@ -382,36 +382,87 @@ input:focus-visible {
   background: var(--color-assistant);
 }
 
-.waitlist-form label {
-  display: block;
-  margin-bottom: 0.4rem;
+.quote-form {
+  display: grid;
+  gap: 1.25rem;
+  margin-top: 1.5rem;
+  padding: 1.5rem;
+  background: var(--color-surface);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+.field {
+  display: grid;
+  gap: 0.4rem;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.field > label,
+.field legend {
+  padding: 0;
   font-weight: 600;
 }
 
-.form-row {
-  display: flex;
-  flex-direction: column;
-  gap: 0.6rem;
-}
-
-@media (min-width: 520px) {
-  .form-row {
-    flex-direction: row;
-  }
-}
-
-.form-row input {
-  flex: 1;
-  min-width: 0;
-  padding: 0.75rem 1rem;
+.field input[type='text'],
+.field input[type='email'] {
+  width: 100%;
+  padding: 0.7rem 0.9rem;
   font: inherit;
   background: #fff;
   border: 2px solid var(--color-border);
-  border-radius: 999px;
+  border-radius: 10px;
 }
 
-.form-row input[aria-invalid='true'] {
+.field input[aria-invalid='true'] {
   border-color: var(--color-error);
+}
+
+.checkbox-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.5rem;
+  margin-top: 0.25rem;
+}
+
+@media (min-width: 560px) {
+  .checkbox-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.checkbox {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.checkbox input {
+  width: 1.1rem;
+  height: 1.1rem;
+  accent-color: var(--color-primary);
+}
+
+.field-error {
+  margin: 0;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--color-error);
+}
+
+.honeypot {
+  position: absolute;
+  left: -10000px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.quote-form .button {
+  justify-self: start;
 }
 
 .form-error {
