@@ -74,7 +74,7 @@ describe('handleQuoteRequest', () => {
     const { deps, getDeps } = fakeDeps();
     const response = await handleQuoteRequest(post({ ...validBody, email: 'nope' }), getDeps);
     expect(response.status).toBe(400);
-    const body = await response.json();
+    const body = (await response.json()) as { ok: boolean; errors: Record<string, string> };
     expect(body.ok).toBe(false);
     expect(Object.keys(body.errors)).toEqual(['email']);
     expect(deps.save).not.toHaveBeenCalled();
