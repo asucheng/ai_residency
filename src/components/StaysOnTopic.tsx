@@ -1,13 +1,11 @@
-import { ON_TOPIC_SUBJECTS, STORE_NAME } from '../content';
+import { ON_TOPIC_SUBJECTS } from '../content';
 
 export function StaysOnTopic() {
   return (
-    <section id="on-topic" className="section">
+    <section id="on-topic" className="section section-alt">
       <div className="container narrow">
         <h2>Stays on topic</h2>
-        <p className="section-intro">
-          The assistant is here for {STORE_NAME} shoppers. It talks about:
-        </p>
+        <p className="section-intro">Your assistant is there for your shoppers. It talks about:</p>
         <ul className="check-list">
           {ON_TOPIC_SUBJECTS.map((subject) => (
             <li key={subject}>{subject}</li>

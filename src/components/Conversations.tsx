@@ -2,11 +2,12 @@ import { CONVERSATIONS } from '../content';
 
 export function Conversations() {
   return (
-    <section id="examples" className="section section-alt">
+    <section id="examples" className="section">
       <div className="container">
         <h2>See it in action</h2>
         <p className="section-intro">
-          Examples of how the assistant answers, declines, and hands questions to a person.
+          Examples from different kinds of store, showing how an assistant answers, declines, and
+          hands questions to the owner.
         </p>
         <div className="conversation-grid">
           {CONVERSATIONS.map((conversation) => (
@@ -15,6 +16,7 @@ export function Conversations() {
               className="conversation"
               aria-labelledby={`conversation-${conversation.id}`}
             >
+              <p className="store-tag">{conversation.store}</p>
               <h3 id={`conversation-${conversation.id}`}>{conversation.label}</h3>
               <ol className="messages">
                 {conversation.messages.map((message, i) => (

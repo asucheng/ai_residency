@@ -5,9 +5,7 @@ import App from './App';
 describe('App', () => {
   it('renders the main heading', () => {
     render(<App />);
-    expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent(
-      /answered in seconds/i,
-    );
+    expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent(/knows your store/i);
   });
 
   it('every in-page link points to a section that exists', () => {
@@ -21,17 +19,17 @@ describe('App', () => {
     }
   });
 
-  it('links to the waitlist from the header and the hero', () => {
+  it('links to the quote form from the header, hero and pricing', () => {
     render(<App />);
-    const links = screen.getAllByRole('link', { name: /join the waitlist/i });
-    expect(links.length).toBeGreaterThanOrEqual(2);
+    const links = screen.getAllByRole('link', { name: /request a quote/i });
+    expect(links.length).toBeGreaterThanOrEqual(3);
     for (const link of links) {
-      expect(link).toHaveAttribute('href', '#waitlist');
+      expect(link).toHaveAttribute('href', '#quote');
     }
   });
 
-  it('says in the footer that the store is fictional', () => {
+  it('says in the footer that this is a demo project', () => {
     render(<App />);
-    expect(screen.getByRole('contentinfo')).toHaveTextContent(/fictional/i);
+    expect(screen.getByRole('contentinfo')).toHaveTextContent(/demo project/i);
   });
 });

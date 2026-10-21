@@ -1,13 +1,15 @@
-import { TOPICS } from '../content';
+import { ANSWER_TOPICS } from '../content';
 
-export function AskTopics() {
+export function WhatItAnswers() {
   return (
-    <section id="ask" className="section">
+    <section id="answers" className="section section-alt">
       <div className="container">
-        <h2>What you can ask</h2>
-        <p className="section-intro">The assistant answers four kinds of questions straight away.</p>
+        <h2>What it answers</h2>
+        <p className="section-intro">
+          Every assistant learns one store, so its answers are about yours.
+        </p>
         <ul className="card-grid">
-          {TOPICS.map((topic) => (
+          {ANSWER_TOPICS.map((topic) => (
             <li key={topic.title} className="card">
               <h3>{topic.title}</h3>
               <p>{topic.description}</p>

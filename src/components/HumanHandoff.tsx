@@ -2,12 +2,10 @@ import { HANDOFF_RULES } from '../content';
 
 export function HumanHandoff() {
   return (
-    <section id="handoff" className="section section-alt">
+    <section id="handoff" className="section">
       <div className="container narrow">
-        <h2>When a human steps in</h2>
-        <p className="section-intro">
-          The assistant emails the store owner, who makes the final call, when:
-        </p>
+        <h2>Hands off to you</h2>
+        <p className="section-intro">Your assistant emails you, and you make the final call, when:</p>
         <ul className="rule-list">
           {HANDOFF_RULES.map((rule) => (
             <li key={rule.title}>
@@ -15,7 +13,7 @@ export function HumanHandoff() {
             </li>
           ))}
         </ul>
-        <p>The shopper is told their question has been passed on and that the owner will reply by email.</p>
+        <p>The shopper is told their question has been passed on and that you&rsquo;ll reply by email.</p>
       </div>
     </section>
   );

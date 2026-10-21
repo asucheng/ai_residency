@@ -5,13 +5,18 @@ import { Conversations } from './Conversations';
 
 describe('Conversations', () => {
   it('covers answering, declining and handing off', () => {
-    expect(CONVERSATIONS.map((c) => c.id)).toEqual(['toy', 'policy', 'off-topic', 'refund']);
+    expect(CONVERSATIONS.map((c) => c.id)).toEqual(['product', 'policy', 'off-topic', 'refund']);
   });
 
-  it('shows every conversation with each message in order', () => {
+  it('comes from more than one kind of store', () => {
+    expect(new Set(CONVERSATIONS.map((c) => c.store)).size).toBeGreaterThanOrEqual(3);
+  });
+
+  it('shows every conversation with its store and each message in order', () => {
     render(<Conversations />);
     for (const conversation of CONVERSATIONS) {
       const article = screen.getByRole('article', { name: conversation.label });
+      expect(article).toHaveTextContent(conversation.store);
       const items = within(article).getAllByRole('listitem');
       expect(items).toHaveLength(conversation.messages.length);
       conversation.messages.forEach((message, i) => {

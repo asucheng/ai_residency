@@ -1,92 +1,108 @@
 export type NavLink = { href: string; label: string };
+export type Step = { title: string; description: string };
 export type Topic = { title: string; description: string; example: string };
 export type ChatMessage = { from: 'shopper' | 'assistant'; text: string };
-export type Conversation = { id: string; label: string; messages: ChatMessage[] };
+export type Conversation = { id: string; store: string; label: string; messages: ChatMessage[] };
 export type HandoffRule = { title: string; description: string };
 
-export const STORE_NAME = 'Wag & Whisker';
+export const BRAND_NAME = 'StoreSidekick';
 
 export const NAV_LINKS: NavLink[] = [
-  { href: '#ask', label: 'What you can ask' },
+  { href: '#how', label: 'How it works' },
+  { href: '#answers', label: 'What it answers' },
   { href: '#examples', label: 'Examples' },
-  { href: '#on-topic', label: 'Stays on topic' },
-  { href: '#handoff', label: 'Human hand-off' },
+  { href: '#pricing', label: 'Pricing' },
 ];
 
-export const TOPICS: Topic[] = [
+export const STEPS: Step[] = [
   {
-    title: 'A specific toy',
-    description: 'Materials, sizes, durability, and which pets it suits.',
-    example: 'Is the Tug Titan safe for a heavy chewer?',
+    title: 'Tell us about your store',
+    description: 'Share your store URL, what you sell, and where customers reach you today.',
   },
   {
-    title: 'The store',
-    description: 'Ordering, delivery times, and how to reach us.',
-    example: 'How long does delivery take?',
+    title: 'We build your assistant',
+    description: 'We shape it around your products, your brand voice and your store policies.',
   },
   {
-    title: 'Our brand',
-    description: 'Who we are and the safety standards our toys meet.',
-    example: 'Are your toys made with non-toxic materials?',
+    title: 'It handles the routine',
+    description:
+      'Shoppers get instant answers. Anything unusual, or anything involving money, comes to you.',
+  },
+];
+
+export const ANSWER_TOPICS: Topic[] = [
+  {
+    title: 'Your products',
+    description: 'Sizes, materials, compatibility, and which product suits which customer.',
+    example: 'Will this harness fit a 30 kg dog?',
   },
   {
-    title: 'Policies',
-    description: 'Shipping, returns, and exchanges.',
-    example: 'Can I return a toy my cat ignored?',
+    title: 'Your brand',
+    description: 'Your story, values and standards, told in your voice.',
+    example: 'Are your products cruelty-free?',
+  },
+  {
+    title: 'Your policies',
+    description: 'Shipping times, returns and exchanges, exactly as your store sets them.',
+    example: 'Can I return an opened item?',
   },
 ];
 
 export const CONVERSATIONS: Conversation[] = [
   {
-    id: 'toy',
-    label: 'A toy question',
+    id: 'product',
+    store: 'Pet toy store',
+    label: 'A product question',
     messages: [
-      { from: 'shopper', text: 'Is the Tug Titan rope toy okay for a heavy chewer?' },
+      { from: 'shopper', text: 'Is the rope tug toy okay for a heavy chewer?' },
       {
         from: 'assistant',
-        text: 'Yes. The Tug Titan is double-braided cotton rope rated for strong chewers. For dogs over 30 kg, go for the XL size, and replace it once it starts to fray.',
+        text: "Yes. It's double-braided cotton rope rated for strong chewers. For dogs over 30 kg, go for the XL size.",
       },
     ],
   },
   {
     id: 'policy',
+    store: 'Skincare store',
     label: 'A policy question',
     messages: [
-      { from: 'shopper', text: 'How long does shipping take?' },
+      { from: 'shopper', text: "Can I return a moisturiser I've opened?" },
       {
         from: 'assistant',
-        text: 'Orders ship within 1 business day and arrive in 3–5 business days. Shipping is free on orders over $35.',
+        text: 'Yes, within 30 days of delivery, even if it has been opened. Start a return from the link in your order email.',
       },
     ],
   },
   {
     id: 'off-topic',
+    store: 'Outdoor gear store',
     label: 'An off-topic request',
     messages: [
       { from: 'shopper', text: 'Can you help me write my history essay?' },
       {
         from: 'assistant',
-        text: "Sorry, I can only help with Wag & Whisker toys, orders and store policies. Is there a toy I can help you find?",
+        text: 'Sorry, I can only help with our gear, orders and store policies. Are you shopping for anything in particular?',
       },
     ],
   },
   {
     id: 'refund',
+    store: 'Pet toy store',
     label: 'A refund request',
     messages: [
       { from: 'shopper', text: 'My order arrived damaged. Can I get a refund?' },
       {
         from: 'assistant',
-        text: "I'm sorry it arrived damaged. Refunds are decided by our owner, so I've emailed them your details. They'll reply to the email on your order within one business day.",
+        text: "I'm sorry it arrived damaged. Refunds are decided by the store owner, so I've emailed them your details. They'll reply to the email on your order within one business day.",
       },
     ],
   },
 ];
 
 export const ON_TOPIC_SUBJECTS: string[] = [
-  'Our toys and how to choose them',
+  'Your products and how to choose them',
   'Orders, shipping and delivery',
-  'The Wag & Whisker brand',
+  'Your brand and what it stands for',
   'Returns and store policies',
 ];
 
@@ -94,10 +110,10 @@ export const HANDOFF_RULES: HandoffRule[] = [
   {
     title: "It isn't sure of the answer",
     description:
-      "If our store information doesn't clearly answer a question, the assistant says so instead of guessing, and passes it on.",
+      "If your store information doesn't clearly answer a question, the assistant says so instead of guessing, and passes it to you.",
   },
   {
     title: 'Money is involved',
-    description: 'Refunds, discounts and pricing exceptions are always decided by the owner.',
+    description: 'Refunds, discounts and pricing exceptions are always your decision.',
   },
 ];

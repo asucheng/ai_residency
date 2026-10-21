@@ -1,11 +1,13 @@
-import { AskTopics } from './components/AskTopics';
 import { Conversations } from './components/Conversations';
 import { Footer } from './components/Footer';
 import { Header } from './components/Header';
 import { Hero } from './components/Hero';
+import { HowItWorks } from './components/HowItWorks';
 import { HumanHandoff } from './components/HumanHandoff';
+import { Pricing } from './components/Pricing';
+import { QuoteSection } from './components/QuoteSection';
 import { StaysOnTopic } from './components/StaysOnTopic';
-import { WaitlistSection } from './components/WaitlistSection';
+import { WhatItAnswers } from './components/WhatItAnswers';
 
 export default function App() {
   return (
@@ -13,11 +15,13 @@ export default function App() {
       <Header />
       <main>
         <Hero />
-        <AskTopics />
+        <HowItWorks />
+        <WhatItAnswers />
         <Conversations />
         <StaysOnTopic />
         <HumanHandoff />
-        <WaitlistSection />
+        <Pricing />
+        <QuoteSection />
       </main>
       <Footer />
     </>
