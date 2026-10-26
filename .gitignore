@@ -21,3 +21,6 @@ __pycache__/
 
 # Design specs and plans stay local (not project source)
 docs/
+
+# Stage reflections stay local
+REFLECTION.md
