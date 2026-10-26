@@ -20,7 +20,7 @@ Browser form ──POST /api/quote-request──▶ Vercel function
                                             └─ email the owner via Resend
 ```
 
-The browser never holds a key. The public Supabase key has no access to the table.
+The API writes to Supabase with a **server-only secret key**, stored as a Vercel environment variable and never sent to the browser. The browser holds no keys at all. The public (publishable) Supabase key isn't used anywhere, and the table's access rules deny it all access.
 
 ## Tech stack
 
@@ -78,6 +78,16 @@ removes all access for the public key.
 | `npm test` | Run the tests once |
 | `npm run lint` | Lint |
 | `npm run build` | Type-check (app and API) and build to `dist/` |
+
+## Before real customers
+
+This is a Stage 1 learning project. Before real store owners use the form, in priority order:
+
+1. Add rate limiting to `/api/quote-request`. The hidden honeypot field only stops simple bots, not repeated direct API calls.
+2. Send from a verified domain in Resend, and handle bounces and delivery failures. Requests are already saved even if the email fails.
+3. Add a privacy notice and a consent line to the form, since it collects contact and store details.
+4. Add error monitoring, and test recovery when the database or email service fails.
+5. Keep AI-drafted quotes for later, until the manual quote process is reliable.
 
 ## Project structure
 
